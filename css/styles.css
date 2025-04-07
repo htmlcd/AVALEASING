@@ -22,7 +22,7 @@ body {
 /* Header styles */
 header {
     background-color: var(--primary-color);
-    padding: 0.1rem 0;
+    padding: 0.05rem 0;
     position: fixed;
     width: 100%;
     top: 0;
@@ -33,7 +33,7 @@ header {
 /* Оглавление */
 nav {
     background-color: var(--white);
-    padding: 0.1rem 0;
+    padding: 0.05rem 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -345,37 +345,59 @@ footer {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    /* Оглавление */
-    .logo {
-        width: 50px;
+    header {
+        position: relative;
+        padding: 0.05rem 0;
     }
-    
+
+    nav {
+        position: relative;
+        padding: 0.05rem 0;
+    }
+
+    .logo-container {
+        padding: 0 0.3rem;
+    }
+
+    .logo {
+        width: 40px;
+    }
+
     .phone-number {
         font-size: 0.8rem;
     }
-    
-    /* Слайдер */
+
     .hero-slider {
-        height: 70vh;
+        height: 100vh;
+        margin-top: 0;
     }
-    
+
     .slider-container {
-        margin-top: -10px;
+        margin-top: 0;
     }
-    
+
+    .slide {
+        height: 100vh;
+    }
+
+    .slide img {
+        height: 100vh;
+    }
+
     .slide-content {
         padding: 1rem;
         max-width: 90%;
+        top: 60%;
     }
-    
+
     .slide-content h2 {
         font-size: 1.5rem;
     }
-    
+
     .slide-content p {
         font-size: 1rem;
     }
-    
+
     /* Каталог автомобилей */
     .car-catalog {
         padding: 1rem;
@@ -515,29 +537,41 @@ footer {
 /* Дополнительные стили для очень маленьких экранов */
 @media (max-width: 480px) {
     .hero-slider {
-        height: 60vh;
+        height: 100vh;
     }
-    
+
+    .slide {
+        height: 100vh;
+    }
+
+    .slide img {
+        height: 100vh;
+    }
+
+    .slide-content {
+        top: 55%;
+    }
+
     .slide-content h2 {
         font-size: 1.2rem;
     }
-    
+
     .slide-content p {
         font-size: 0.9rem;
     }
-    
+
     .car-card img {
         height: 180px;
     }
-    
+
     .car-card h3 {
         font-size: 1.1rem;
     }
-    
+
     .modal-content {
         margin: 5% auto;
     }
-    
+
     .modal-content img {
         height: 180px;
     }

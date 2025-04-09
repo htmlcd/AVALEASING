@@ -109,4 +109,79 @@ document.addEventListener('DOMContentLoaded', function() {
 
         lastScroll = currentScroll;
     });
+
+    // Маска для телефона
+    document.querySelectorAll('input[name="phone"]').forEach(input => {
+        input.addEventListener('input', function(e) {
+            let x = e.target.value.replace(/\D/g, '')
+                .match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+            e.target.value = !x[2] ? x[1] : '+7 (' + x[2] + ') ' + (x[3] ? x[3] + '-' + x[4] : x[3]) + (x[4] && x[5] ? '-' + x[5] : '');
+        });
+    });
+
+    // Валидация формы
+    document.querySelectorAll('.application-form').forEach(form => {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.setAttribute('disabled', 'disabled');
+
+        form.addEventListener('input', function(e) {
+            const name = form.querySelector('input[name="name"]').value;
+            const phone = form.querySelector('input[name="phone"]').value;
+            
+            if (name.length >= 2 && phone.replace(/\D/g, '').length === 11) {
+                submitBtn.removeAttribute('disabled');
+            } else {
+                submitBtn.setAttribute('disabled', 'disabled');
+            }
+        });
+    });
+
+    // Обработка отправки формы
+    document.querySelectorAll('.application-form').forEach(form => {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitButton = this.querySelector('.submit-button');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Отправка...';
+
+            const name = this.querySelector('input[name="name"]').value;
+            const phone = this.querySelector('input[name="phone"]').value;
+            const car = this.querySelector('input[name="car"]').value;
+
+            try {
+                // Отправляем email через EmailJS
+                const response = await emailjs.send(
+                    "BHk79JPNvYnGthPdi", // Service ID
+                    "template_xxxxxxx", // Замените на ваш Template ID
+                    {
+                        to_email: "avaleasing20@gmail.com",
+                        from_name: "AVA Leasing Website",
+                        subject: `Новая заявка на ${car}`,
+                        name: name,
+                        phone: phone,
+                        car: car
+                    }
+                );
+
+                if (response.status === 200) {
+                    alert('Спасибо! Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.');
+                    this.reset();
+                    // Закрываем модальное окно
+                    const modal = this.closest('.modal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                    }
+                } else {
+                    throw new Error('Ошибка при отправке формы');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже или свяжитесь с нами по телефону.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Отправить заявку';
+            }
+        });
+    });
 }); 
